@@ -1,0 +1,42 @@
+require 'middleman-core'
+
+module Landingman
+  class LegalExtension < ::Middleman::Extension
+    LIQUID_TEMPLATES_DIR = File.expand_path(File.join('..', '..', '..', 'legal'), __FILE__)
+    expose_to_template :cee_disclosure
+    expose_to_template :sunrun_disclosure
+    option :brand, 'Solar America', 'Brand Name of the Site'
+    option :list_url, 'https://www.solaramerica.com/installers/', 'URL to the list of solar companies'
+
+    def initialize(app, options_hash={}, &block)
+      super
+      require 'liquid'
+      @liquid_templates = {}
+    end
+
+    def cee_disclosure(brand = nil, list_url = nil)
+      brand     ||= options.brand
+      list_url  ||= options.list_url
+      template('cee_disclosure', { brand: brand, list_url: list_url })
+    end
+
+    def sunrun_disclosure
+      template('sunrun_disclosure')
+    end
+
+    protected
+      def template(path, params = nil)
+        @liquid_templates[path] ||= liquid_template(path)
+        params ||= {}
+        html = @liquid_templates[path].render(params.stringify_keys)
+        ::ActiveSupport::SafeBuffer.new.safe_concat(html)
+      end
+
+      def liquid_template(path)
+        path += '.liquid' unless path.end_with?('.liquid')
+        full_path = File.join(LIQUID_TEMPLATES_DIR, path)
+        raise "Template #{full_path} not found" if !File.exist?(full_path)
+        Liquid::Template.parse(File.read(full_path))
+      end
+  end
+end
