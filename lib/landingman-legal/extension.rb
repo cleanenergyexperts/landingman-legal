@@ -5,7 +5,9 @@ module Landingman
     LIQUID_TEMPLATES_DIR = File.expand_path(File.join('..', '..', '..', 'legal'), __FILE__)
     expose_to_template :cee_disclosure
     expose_to_template :sunrun_disclosure
+    expose_to_template :terms_of_use
     option :brand, 'Solar America', 'Brand Name of the Site'
+    option :site_url, 'solaramerica.com', 'URL of the site'
     option :list_url, 'https://www.solaramerica.com/installers/', 'URL to the list of solar companies'
 
     def initialize(app, options_hash={}, &block)
@@ -13,6 +15,11 @@ module Landingman
       require 'liquid'
       @liquid_templates = {}
     end
+
+    def terms_of_use(site_url = nil)
+      site_url	||= options.site_url
+      template('terms_of_use', { site_url: site_url })
+    end	
 
     def cee_disclosure(brand = nil, list_url = nil)
       brand     ||= options.brand
