@@ -21,6 +21,11 @@ module Landingman
       template('terms_of_use', { site_url: site_url })
     end	
 
+    def privacy_policy(site_url = nil)
+      site_url  ||= options.site_url
+      template('privacy_policy', { site_url: site_url })
+    end
+
     def cee_disclosure(brand = nil, list_url = nil)
       brand     ||= options.brand
       list_url  ||= options.list_url
