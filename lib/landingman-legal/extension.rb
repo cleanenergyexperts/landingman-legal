@@ -6,6 +6,7 @@ module Landingman
     expose_to_template :cee_disclosure
     expose_to_template :sunrun_disclosure
     expose_to_template :terms_of_use
+    expose_to_template :privacy_policy
     option :brand, 'Solar America', 'Brand Name of the Site'
     option :site_url, 'solaramerica.com', 'URL of the site'
     option :list_url, 'https://www.solaramerica.com/installers/', 'URL to the list of solar companies'
