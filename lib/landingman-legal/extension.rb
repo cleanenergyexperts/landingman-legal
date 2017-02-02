@@ -10,6 +10,7 @@ module Landingman
     option :brand, 'Solar America', 'Brand Name of the Site'
     option :site_url, 'solaramerica.com', 'URL of the site'
     option :list_url, 'https://www.solaramerica.com/installers/', 'URL to the list of solar companies'
+    option :contact_email, 'contact@Solar-America.org', 'Contact Email for the Site'
 
     def initialize(app, options_hash={}, &block)
       super
@@ -22,9 +23,10 @@ module Landingman
       template('terms_of_use', { site_url: site_url })
     end	
 
-    def privacy_policy(site_url = nil)
+    def privacy_policy(site_url = nil, contact_email = nil)
       site_url  ||= options.site_url
-      template('privacy_policy', { site_url: site_url })
+      contact_email  ||= options.contact_email
+      template('privacy_policy', { site_url: site_url, contact_email: contact_email })
     end
 
     def cee_disclosure(brand = nil, list_url = nil)
