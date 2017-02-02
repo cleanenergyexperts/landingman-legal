@@ -18,9 +18,10 @@ module Landingman
       @liquid_templates = {}
     end
 
-    def terms_of_use(site_url = nil)
+    def terms_of_use(site_url = nil, contact_email = nil)
       site_url	||= options.site_url
-      template('terms_of_use', { site_url: site_url })
+      contact_email  ||= options.contact_email
+      template('terms_of_use', { site_url: site_url, contact_email: contact_email })
     end	
 
     def privacy_policy(site_url = nil, contact_email = nil)
