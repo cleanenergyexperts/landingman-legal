@@ -6,7 +6,7 @@ source 'https://rubygems.org'
 gemspec
 
 group :development do
-  gem 'rake', '=11.3.0'
+  gem 'rake'
   gem 'rdoc'
   gem 'yard'
 end
